@@ -1,6 +1,7 @@
 package com.bridgelabz.addressbook.service;
 
 import com.bridgelabz.addressbook.dto.AddressBookDTO;
+import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.model.AddressBookModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class AddressBookService {
                 .findFirst()
                 .orElseThrow(() -> {
                     log.error("Model with ID {} not found.", id);
-                    return new NoSuchElementException("Error: Model with ID " + id + " not found.");
+                    return new AddressBookException("Error: Model with ID " + id + " not found.");
                 });
     }
 
