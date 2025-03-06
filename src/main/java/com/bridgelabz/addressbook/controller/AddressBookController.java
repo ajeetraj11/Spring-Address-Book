@@ -1,70 +1,53 @@
 package com.bridgelabz.addressbook.controller;
 
-import com.bridgelabz.addressbook.model.AddressBookEntry;
+import com.bridgelabz.addressbook.dto.AddressBookDTO;
+import com.bridgelabz.addressbook.model.AddressBookModel;
 import com.bridgelabz.addressbook.service.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-// REST Controller for Address Book
+// REST Controller for handling Address Book API requests
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/addressbook")
 public class AddressBookController {
 
-    // Inject AddressBookService
+    // Inject AddressBookService to handle business logic
     @Autowired
     private AddressBookService addressBookService;
 
-    // GET request to fetch all entries
+    // GET request to fetch all Address Book entries
     @GetMapping
-    public ResponseEntity<List<AddressBookEntry>> getAllEntries() {
+    public ResponseEntity<List<AddressBookModel>> getAllEntries() {
         return ResponseEntity.ok(addressBookService.getAllEntries());
     }
 
-    // GET request to fetch an entry by user-given ID
+    // GET request to fetch an entry by ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getEntryById(@PathVariable int id) {
-        try {
-            AddressBookEntry entry = addressBookService.getEntryById(id);
-            return ResponseEntity.ok(entry);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body("Error: Entry with ID " + id + " not found.");
-        }
+        return ResponseEntity.ok(addressBookService.getEntryById(id));
     }
 
-    // POST request to add a new entry with a user-given ID
+    // POST request to add a new entry
     @PostMapping
-    public ResponseEntity<String> addEntry(@RequestParam int id, @RequestBody AddressBookEntry entry) {
-        try {
-            addressBookService.addEntry(id, entry);
-            return ResponseEntity.ok("Entry added successfully with ID: " + id);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
+    public ResponseEntity<String> addEntry(@RequestBody AddressBookDTO dto) {
+        addressBookService.addEntry(dto);
+        return ResponseEntity.ok("Entry added successfully with ID: " + dto.getId());
     }
 
-    // PUT request to update an entry by user-given ID
+    // PUT request to update an existing entry
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateEntry(@PathVariable int id, @RequestBody AddressBookEntry entry) {
-        try {
-            addressBookService.updateEntry(id, entry);
-            return ResponseEntity.ok("Entry updated successfully for ID: " + id);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+    public ResponseEntity<String> updateEntry(@PathVariable int id, @RequestBody AddressBookDTO dto) {
+        addressBookService.updateEntry(id, dto);
+        return ResponseEntity.ok("Entry updated successfully for ID: " + id);
     }
 
-    // DELETE request to remove an entry by user-given ID
+    // DELETE request to remove an entry by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEntry(@PathVariable int id) {
-        try {
-            addressBookService.deleteEntry(id);
-            return ResponseEntity.ok("Entry deleted successfully for ID: " + id);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        addressBookService.deleteEntry(id);
+        return ResponseEntity.ok("Entry deleted successfully for ID: " + id);
     }
 }

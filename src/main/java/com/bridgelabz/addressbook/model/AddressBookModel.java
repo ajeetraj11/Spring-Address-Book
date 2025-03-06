@@ -1,24 +1,23 @@
 package com.bridgelabz.addressbook.model;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 // Lombok annotation to generate getters, setters, and constructors
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AddressBookEntry {
-    // Unique ID for each entry
+@AllArgsConstructor
+public class AddressBookModel {
+    // Unique ID for the address book entry
     private int id;
 
     // Name of the person
     private String name;
 
-    // Contact number
+    // Phone number of the person
     private String phone;
 
-    // Email address
+    // Email address of the person
     private String email;
 }

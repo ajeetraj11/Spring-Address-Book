@@ -1,46 +1,54 @@
 package com.bridgelabz.addressbook.service;
 
-import com.bridgelabz.addressbook.model.AddressBookEntry;
+import com.bridgelabz.addressbook.dto.AddressBookDTO;
+import com.bridgelabz.addressbook.model.AddressBookModel;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
-// Service class for managing Address Book operations
+// Service class for Address Book operations
 @Service
 public class AddressBookService {
-    // Using a HashMap to store entries with a user-given ID instead of list indexing
-    private final Map<Integer, AddressBookEntry> addressBook = new HashMap<>();
+    // In-memory list to store Address Book entries
+    private final List<AddressBookModel> addressBook = new ArrayList<>();
 
-    // Fetch all entries
-    public List<AddressBookEntry> getAllEntries() {
-        return new ArrayList<>(addressBook.values()); // Convert map values to a list
+    // Method to fetch all Address Book entries
+    public List<AddressBookModel> getAllEntries() {
+        return new ArrayList<>(addressBook);
     }
 
-    // Fetch an entry by user-given ID
-    public AddressBookEntry getEntryById(int id) {
-        return addressBook.get(id); // Get entry by user ID
+    // Method to fetch a single entry by ID
+    public AddressBookModel getEntryById(int id) {
+        return addressBook.stream()
+                .filter(entry -> entry.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Error: Entry with ID " + id + " not found."));
     }
 
-    // Add a new entry with a user-provided ID
-    public void addEntry(int id, AddressBookEntry entry) {
-        if (addressBook.containsKey(id)) {
-            throw new IllegalArgumentException("Error: ID already exists. Choose a unique ID.");
-        }
-        addressBook.put(id, entry); // Store using user-given ID
+    // Method to add a new entry using DTO
+    public void addEntry(AddressBookDTO dto) {
+        // Convert DTO to Model and add it to the list
+        AddressBookModel entry = new AddressBookModel(dto.getId(), dto.getName(), dto.getPhone(), dto.getEmail());
+        addressBook.add(entry);
     }
 
-    // Update an existing entry using user-given ID
-    public void updateEntry(int id, AddressBookEntry entry) {
-        if (!addressBook.containsKey(id)) {
-            throw new NoSuchElementException("Error: Entry with this ID does not exist.");
-        }
-        addressBook.put(id, entry); // Update existing entry
+    // Method to update an existing entry using ID
+    public void updateEntry(int id, AddressBookDTO dto) {
+        // Fetch the existing entry
+        AddressBookModel entry = getEntryById(id);
+
+        // Update fields with new values
+        entry.setName(dto.getName());
+        entry.setPhone(dto.getPhone());
+        entry.setEmail(dto.getEmail());
     }
 
-    // Delete an entry using user-given ID
+    // Method to delete an entry by ID
     public void deleteEntry(int id) {
-        if (!addressBook.containsKey(id)) {
-            throw new NoSuchElementException("Error: Entry with this ID does not exist.");
-        }
-        addressBook.remove(id); // Remove by user-given ID
+        // Fetch entry, if exists
+        AddressBookModel entry = getEntryById(id);
+
+        // Remove entry from list
+        addressBook.remove(entry);
     }
 }
