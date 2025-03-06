@@ -19,31 +19,31 @@ public class AddressBookController {
     private AddressBookService addressBookService;
 
     // GET request to fetch all Address Book entries
-    @GetMapping
+    @GetMapping("/getall")
     public ResponseEntity<List<AddressBookModel>> getAllEntries() {
         return ResponseEntity.ok(addressBookService.getAllEntries());
     }
 
     // GET request to fetch an Model by ID
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<AddressBookModel> getModelById(@PathVariable int id) {
         return ResponseEntity.ok(addressBookService.getModelById(id));
     }
 
     // POST request to add a new Model
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<AddressBookModel> addModel(@RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.addModel(dto));
     }
 
     // PUT request to update an existing Model
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<AddressBookModel> updateModel(@PathVariable int id, @RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.updateModel(id, dto));
     }
 
     // DELETE request to remove an Model by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteModel(@PathVariable int id) {
         addressBookService.deleteModel(id);
         return ResponseEntity.ok("Model deleted successfully for ID: " + id);
