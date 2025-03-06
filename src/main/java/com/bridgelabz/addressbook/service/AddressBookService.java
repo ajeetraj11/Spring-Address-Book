@@ -43,12 +43,12 @@ public class AddressBookService {
 
     // Method to update an existing Model using ID
     public AddressBookModel updateModel(int id, AddressBookDTO dto) {
-        log.info("Updating Model with ID: {}", id);
         AddressBookModel Model = getModelById(id);
         Model.setName(dto.getName());
         Model.setPhone(dto.getPhone());
         Model.setEmail(dto.getEmail());
-        log.info("Model updated successfully for ID: {}", id);
+        log.info("Updating Model with ID: {}", id);
+        log.info("Updated Model: {}", dto);
         return Model;
     }
 

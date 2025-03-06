@@ -3,6 +3,7 @@ package com.bridgelabz.addressbook.dto;
 import lombok.*;
 
 // Lombok annotation to auto-generate getters, setters, and constructors
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor

@@ -3,6 +3,7 @@ package com.bridgelabz.addressbook.model;
 import lombok.*;
 
 // Lombok annotation to generate getters, setters, and constructors
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
