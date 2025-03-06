@@ -12,7 +12,7 @@ import java.util.List;
 
 // REST Controller for handling Address Book API requests
 @RestController
-@RequestMapping("/addressbook")
+@RequestMapping("/api/addressbook")
 public class AddressBookController {
 
     // Inject AddressBookService to handle business logic
@@ -31,13 +31,13 @@ public class AddressBookController {
         return ResponseEntity.ok(addressBookService.getModelById(id));
     }
 
-    // POST request to add a new Model (Validates Name Field)
+    // POST request to add a new Model (Validation Enabled)
     @PostMapping
     public ResponseEntity<AddressBookModel> addModel(@Valid @RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.addModel(dto));
     }
 
-    // PUT request to update an existing Model (Validates Name Field)
+    // PUT request to update an existing Model (Validation Enabled)
     @PutMapping("/{id}")
     public ResponseEntity<AddressBookModel> updateModel(@PathVariable int id, @Valid @RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.updateModel(id, dto));
