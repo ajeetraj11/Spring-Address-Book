@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 // Lombok annotation to auto-generate getters, setters, and constructors
 @Data
 @NoArgsConstructor
