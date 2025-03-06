@@ -1,11 +1,10 @@
 package com.bridgelabz.addressbook.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-// Lombok annotation to generate getters, setters, and constructors
-@Data
+// Lombok annotation to auto-generate getters, setters, and constructors
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressBookDTO {

@@ -1,11 +1,10 @@
 package com.bridgelabz.addressbook.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 // Lombok annotation to generate getters, setters, and constructors
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressBookModel {
