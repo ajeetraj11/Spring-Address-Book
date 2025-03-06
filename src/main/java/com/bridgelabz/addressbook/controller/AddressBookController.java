@@ -24,28 +24,28 @@ public class AddressBookController {
         return ResponseEntity.ok(addressBookService.getAllEntries());
     }
 
-    // GET request to fetch an entry by ID
+    // GET request to fetch an Model by ID
     @GetMapping("/{id}")
-    public ResponseEntity<AddressBookModel> getEntryById(@PathVariable int id) {
-        return ResponseEntity.ok(addressBookService.getEntryById(id));
+    public ResponseEntity<AddressBookModel> getModelById(@PathVariable int id) {
+        return ResponseEntity.ok(addressBookService.getModelById(id));
     }
 
-    // POST request to add a new entry
+    // POST request to add a new Model
     @PostMapping
-    public ResponseEntity<AddressBookModel> addEntry(@RequestBody AddressBookDTO dto) {
-        return ResponseEntity.ok(addressBookService.addEntry(dto));
+    public ResponseEntity<AddressBookModel> addModel(@RequestBody AddressBookDTO dto) {
+        return ResponseEntity.ok(addressBookService.addModel(dto));
     }
 
-    // PUT request to update an existing entry
+    // PUT request to update an existing Model
     @PutMapping("/{id}")
-    public ResponseEntity<AddressBookModel> updateEntry(@PathVariable int id, @RequestBody AddressBookDTO dto) {
-        return ResponseEntity.ok(addressBookService.updateEntry(id, dto));
+    public ResponseEntity<AddressBookModel> updateModel(@PathVariable int id, @RequestBody AddressBookDTO dto) {
+        return ResponseEntity.ok(addressBookService.updateModel(id, dto));
     }
 
-    // DELETE request to remove an entry by ID
+    // DELETE request to remove an Model by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEntry(@PathVariable int id) {
-        addressBookService.deleteEntry(id);
-        return ResponseEntity.ok("Entry deleted successfully for ID: " + id);
+    public ResponseEntity<String> deleteModel(@PathVariable int id) {
+        addressBookService.deleteModel(id);
+        return ResponseEntity.ok("Model deleted successfully for ID: " + id);
     }
 }
