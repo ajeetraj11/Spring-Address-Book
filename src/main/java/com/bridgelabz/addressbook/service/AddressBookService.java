@@ -3,7 +3,6 @@ package com.bridgelabz.addressbook.service;
 import com.bridgelabz.addressbook.dto.AddressBookDTO;
 import com.bridgelabz.addressbook.model.AddressBookModel;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 // Service class for Address Book operations
@@ -26,14 +25,15 @@ public class AddressBookService {
     }
 
     // Method to add a new entry using DTO
-    public void addEntry(AddressBookDTO dto) {
+    public AddressBookModel addEntry(AddressBookDTO dto) {
         // Convert DTO to Model and add it to the list
         AddressBookModel entry = new AddressBookModel(dto.getId(), dto.getName(), dto.getPhone(), dto.getEmail());
         addressBook.add(entry);
+        return entry;
     }
 
     // Method to update an existing entry using ID
-    public void updateEntry(int id, AddressBookDTO dto) {
+    public AddressBookModel updateEntry(int id, AddressBookDTO dto) {
         // Fetch the existing entry
         AddressBookModel entry = getEntryById(id);
 
@@ -41,6 +41,8 @@ public class AddressBookService {
         entry.setName(dto.getName());
         entry.setPhone(dto.getPhone());
         entry.setEmail(dto.getEmail());
+
+        return entry;
     }
 
     // Method to delete an entry by ID

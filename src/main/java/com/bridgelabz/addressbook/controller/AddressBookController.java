@@ -26,22 +26,20 @@ public class AddressBookController {
 
     // GET request to fetch an entry by ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEntryById(@PathVariable int id) {
+    public ResponseEntity<AddressBookModel> getEntryById(@PathVariable int id) {
         return ResponseEntity.ok(addressBookService.getEntryById(id));
     }
 
     // POST request to add a new entry
     @PostMapping
-    public ResponseEntity<String> addEntry(@RequestBody AddressBookDTO dto) {
-        addressBookService.addEntry(dto);
-        return ResponseEntity.ok("Entry added successfully with ID: " + dto.getId());
+    public ResponseEntity<AddressBookModel> addEntry(@RequestBody AddressBookDTO dto) {
+        return ResponseEntity.ok(addressBookService.addEntry(dto));
     }
 
     // PUT request to update an existing entry
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateEntry(@PathVariable int id, @RequestBody AddressBookDTO dto) {
-        addressBookService.updateEntry(id, dto);
-        return ResponseEntity.ok("Entry updated successfully for ID: " + id);
+    public ResponseEntity<AddressBookModel> updateEntry(@PathVariable int id, @RequestBody AddressBookDTO dto) {
+        return ResponseEntity.ok(addressBookService.updateEntry(id, dto));
     }
 
     // DELETE request to remove an entry by ID
