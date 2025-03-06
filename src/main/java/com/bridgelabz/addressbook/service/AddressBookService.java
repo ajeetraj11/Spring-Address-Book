@@ -3,61 +3,45 @@ package com.bridgelabz.addressbook.service;
 import com.bridgelabz.addressbook.dto.AddressBookDTO;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.model.AddressBookModel;
-import lombok.extern.slf4j.Slf4j;
+import com.bridgelabz.addressbook.repository.AddressBookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
-// Lombok annotation to enable logging
-@Slf4j
+// Service class for business logic
 @Service
 public class AddressBookService {
-    // Using a List to store Address Book entries in memory
-    private final List<AddressBookModel> addressBook = new ArrayList<>();
 
-    // Method to fetch all Address Book entries
+    @Autowired
+    private AddressBookRepository addressBookRepository;
+
+    // Retrieve all address book entries
     public List<AddressBookModel> getAllEntries() {
-        log.info("Fetching all address book entries.");
-        return new ArrayList<>(addressBook);
+        return addressBookRepository.findAll();
     }
 
-    // Method to fetch a single Model by ID
+    // Retrieve a specific entry by ID
     public AddressBookModel getModelById(int id) {
-        log.info("Fetching Model with ID: {}", id);
-        return addressBook.stream()
-                .filter(Model -> Model.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> {
-                    log.error("Model with ID {} not found.", id);
-                    return new AddressBookException("Error: Model with ID " + id + " not found.");
-                });
+        return addressBookRepository.findById(id).orElseThrow(() -> new AddressBookException("Address Book Entry not found for ID: " + id));
     }
 
-    // Method to add a new Model using DTO
+    // Add a new address book entry
     public AddressBookModel addModel(AddressBookDTO dto) {
-        log.info("Adding new Model: {}", dto);
-        AddressBookModel Model = new AddressBookModel(dto.getId(), dto.getName(), dto.getPhone(), dto.getEmail());
-        addressBook.add(Model);
-        log.info("Model added successfully with ID: {}", dto.getId());
-        return Model;
+        AddressBookModel model = new AddressBookModel(dto);
+        return addressBookRepository.save(model);
     }
 
-    // Method to update an existing Model using ID
+    // Update an existing entry by ID
     public AddressBookModel updateModel(int id, AddressBookDTO dto) {
-        AddressBookModel Model = getModelById(id);
-        Model.setName(dto.getName());
-        Model.setPhone(dto.getPhone());
-        Model.setEmail(dto.getEmail());
-        log.info("Updating Model with ID: {}", id);
-        log.info("Updated Model: {}", dto);
-        return Model;
+        AddressBookModel model = getModelById(id);
+        model.update(dto);
+        return addressBookRepository.save(model);
     }
 
-    // Method to delete an Model by ID
+    // Delete an entry by ID
     public void deleteModel(int id) {
-        log.info("Deleting Model with ID: {}", id);
-        AddressBookModel Model = getModelById(id);
-        addressBook.remove(Model);
-        log.info("Model deleted successfully for ID: {}", id);
+        AddressBookModel model = getModelById(id);
+        addressBookRepository.delete(model);
     }
 }

@@ -10,43 +10,42 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// REST Controller for handling Address Book API requests
+// REST Controller for Address Book API
 @RestController
 @RequestMapping("/api/addressbook")
 public class AddressBookController {
 
-    // Inject AddressBookService to handle business logic
     @Autowired
     private AddressBookService addressBookService;
 
-    // GET request to fetch all Address Book entries
+    // Fetch all entries
     @GetMapping
     public ResponseEntity<List<AddressBookModel>> getAllEntries() {
         return ResponseEntity.ok(addressBookService.getAllEntries());
     }
 
-    // GET request to fetch an Model by ID
+    // Fetch entry by ID
     @GetMapping("/{id}")
     public ResponseEntity<AddressBookModel> getModelById(@PathVariable int id) {
         return ResponseEntity.ok(addressBookService.getModelById(id));
     }
 
-    // POST request to add a new Model (Validation Enabled)
+    // Add a new entry (with validation)
     @PostMapping
     public ResponseEntity<AddressBookModel> addModel(@Valid @RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.addModel(dto));
     }
 
-    // PUT request to update an existing Model (Validation Enabled)
+    // Update an existing entry by ID
     @PutMapping("/{id}")
     public ResponseEntity<AddressBookModel> updateModel(@PathVariable int id, @Valid @RequestBody AddressBookDTO dto) {
         return ResponseEntity.ok(addressBookService.updateModel(id, dto));
     }
 
-    // DELETE request to remove an Model by ID
+    // Delete an entry by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteModel(@PathVariable int id) {
         addressBookService.deleteModel(id);
-        return ResponseEntity.ok("Model deleted successfully for ID: " + id);
+        return ResponseEntity.ok("Entry deleted successfully for ID: " + id);
     }
 }

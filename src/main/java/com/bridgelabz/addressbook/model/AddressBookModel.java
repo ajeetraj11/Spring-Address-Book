@@ -1,23 +1,59 @@
 package com.bridgelabz.addressbook.model;
 
-import lombok.*;
+import com.bridgelabz.addressbook.dto.AddressBookDTO;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// Lombok annotation to generate getters, setters, and constructors
-@ToString
-@Getter
-@Setter
+// Lombok annotation to generate getters, setters, constructors
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "address_book")
 public class AddressBookModel {
-    // Unique ID for the address book entry
+
+    // Primary Key for AddressBook Table
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // Name of the person
-    private String name;
+    // Full Name of the contact
+    private String fullName;
 
-    // Phone number of the person
-    private String phone;
+    // Phone Number of the contact
+    private String phoneNumber;
 
-    // Email address of the person
-    private String email;
+    // Address of the contact
+    private String address;
+
+    // City of the contact
+    private String city;
+
+    // State of the contact
+    private String state;
+
+    // Zip Code of the contact
+    private String zipCode;
+
+    // Constructor to create model from DTO
+    public AddressBookModel(AddressBookDTO dto) {
+        this.fullName = dto.getFullName();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.address = dto.getAddress();
+        this.city = dto.getCity();
+        this.state = dto.getState();
+        this.zipCode = dto.getZipCode();
+    }
+
+    // Method to update model from DTO
+    public void update(AddressBookDTO dto) {
+        this.fullName = dto.getFullName();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.address = dto.getAddress();
+        this.city = dto.getCity();
+        this.state = dto.getState();
+        this.zipCode = dto.getZipCode();
+    }
 }
