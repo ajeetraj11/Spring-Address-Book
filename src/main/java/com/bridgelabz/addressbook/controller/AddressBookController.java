@@ -13,6 +13,7 @@ import java.util.List;
 // REST Controller for Address Book API
 @RestController
 @RequestMapping("/api/addressbook")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AddressBookController {
 
     @Autowired
